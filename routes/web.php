@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\produk;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -19,16 +22,14 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/key',function(){
+$router->get('/key', function () {
     return str::random(32);
 });
 
-// $router->post('/login', 'AuthController@login' );
-// $router->post('/register', 'AuthController@register' );
 
 Route::group([
 
-    // 'middleware' => 'api',
+    // 'middleware' => 'auth',
     'prefix' => 'auth'
 
 ], function ($router) {
@@ -37,5 +38,16 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
 });
+
+$router->group(
+    [
+        'middleware' => 'auth',
+        'prefix' => 'produk'
+    ],
+    function ($router){
+        Route::get('/', 'ProdukController@index');
+        Route::get('/{id}', 'ProdukController@show');
+        Route::post('/store', 'ProdukController@store');
+    }
+);

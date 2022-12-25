@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 class AuthController extends Controller
 {
-      public function __construct()
+    public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login']]);
     }
@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -55,7 +55,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        // return $this->respondWithToken(auth()->refresh());
     }
 
     /**
@@ -69,8 +69,8 @@ class AuthController extends Controller
     {
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 12000
+            'token_type' => 'bearer'
+
         ]);
     }
 }
