@@ -2,6 +2,7 @@
 
 use App\Models\produk;
 use App\Models\User;
+use FastRoute\Route as FastRouteRoute;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -45,9 +46,11 @@ $router->group(
         'middleware' => 'auth',
         'prefix' => 'produk'
     ],
-    function ($router){
+    function ($router) {
         Route::get('/', 'ProdukController@index');
         Route::get('/{id}', 'ProdukController@show');
         Route::post('/store', 'ProdukController@store');
+        Route::delete('/delete/{id}', 'ProdukController@destroy');
+        Route::put('/{id}', 'ProdukController@update');
     }
 );

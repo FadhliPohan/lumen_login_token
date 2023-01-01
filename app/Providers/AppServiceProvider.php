@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        // Route::model('produk', App\Produk::class);
         Response::macro('success', function ($message, $data) {
             return response()->json(
                 [
@@ -45,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+       
         Response::macro('validation', function ($message) {
             return response()->json(
                 [
